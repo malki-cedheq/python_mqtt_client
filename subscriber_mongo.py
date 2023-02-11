@@ -2,7 +2,7 @@
 # par com publisher_mongo.py
 '''
 Autor: Malki-çedheq
-Descrição: inscreve no broker mqtt, e envia JSON para MONGODB
+Descrição: inscreve no BROKER mqtt, e envia JSON para MONGODB
 Data: 11/02/2023
 '''
 from dotenv import dotenv_values
@@ -16,47 +16,70 @@ env = dotenv_values(".env")
 # instância do PyMongo
 mongoClient = MongoClient('mongodb://172.20.144.1:27017')
 
-broker = env['BROKER']
-port = env['PORT']
-username = env['USERNAME']
-password = env['PASSWORD']
-protocol = 'tcp'  # tcp / websockets
-topic = "python/mqtt"
-client_id = f'python-mqtt-{random.randint(0, 100)}'
+BROKER = env['BROKER']
+PORT = int(env['PORT'])
+USERNAME = env['USERNAME']
+PASSWORD = env['PASSWORD']
+PROTOCOL = 'tcp'  # tcp / websockets
+CLIENT_ID = f'python-mqtt-{random.randint(0, 100)}'
 
 
 def connect_mqtt() -> mqtt_client:
+    '''
+    Conecta o cliente mqtt ao BROKER mqtt
+    '''
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
-            print("Conectado ao Broker MQTT com sucesso!")
+            print("Conectado ao BROKER MQTT com sucesso!")
         else:
             print("Falha ao conectar, STATUS CODE %d\n", rc)
 
-    client = mqtt_client.Client(client_id, transport=protocol)
-    client.username_pw_set(username, password)
+    client = mqtt_client.Client(CLIENT_ID, transport=PROTOCOL)
+    client.username_pw_set(USERNAME, PASSWORD)
     client.on_connect = on_connect
-    client.connect(broker, port)
+    client.connect(BROKER, PORT)
     return client
 
 
-def subscribe(client: mqtt_client):
-
+def subscribe(client: mqtt_client, database: str, topic: str):
+    '''
+    Inscrive o cliente mqtt em um tópico
+    Argumentos:
+    client: instância do cliente mqtt
+    topic: nome do tópico para inscrição
+    '''
     def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-        send_to_mongo(msg.payload.decode(), 'sismo', 'bpm')
+        print(f"Recebeu `{msg.payload.decode()}` do tópico `{msg.topic}`")
+        send_to_mongo(msg.payload.decode(), database, topic)
 
     client.subscribe(topic)
     client.on_message = on_message
 
 
 def send_to_mongo(payload: str, database: str, collection: str) -> None:
+    '''
+    Decodifica o Payload como JSON e insere o documento no MongoDB
+    Argumentos:
+    payload: os dados JSON codificados em string
+    database: o db no mongoDB que irá receber o documento
+    collection: a coleção no mongoDB que irá receber o documento
+    '''
     db = mongoClient[database]
     db[collection].insert_one(json.loads(payload))
 
 
 def run():
-    client = connect_mqtt()
-    subscribe(client)
+    client = connect_mqtt()  # conecta ao broker
+
+    # Inscrições nos tópicos
+    subscribe(client, 'sismo', 'acelerometria')
+    subscribe(client, 'sismo', 'bpm')
+    subscribe(client, 'sismo', 'ecg')
+    subscribe(client, 'sismo', 'giroscopia')
+    subscribe(client, 'sismo', 'spo2')
+    subscribe(client, 'sismo', 'temperatura')
+
+    # O método bloqueia o programa, é útil quando o programa deve ser executado indefinidamente
     client.loop_forever()
 
 

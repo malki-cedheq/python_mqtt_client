@@ -12,48 +12,60 @@ from paho.mqtt import client as mqtt_client
 
 env = dotenv_values(".env")
 
-broker = env['BROKER']
-port = env['PORT']
-username = env['USERNAME']
-password = env['PASSWORD']
-protocol = 'tcp'  # tcp / websockets
-topic = "python/mqtt"
-client_id = f'python-mqtt-{random.randint(0, 100)}'
+BROKER = env['BROKER']
+PORT = int(env['PORT'])
+USERNAME = env['USERNAME']
+PASSWORD = env['PASSWORD']
+PROTOCOL = 'tcp'  # tcp / websockets
+CLIENT_ID = f'python-mqtt-{random.randint(0, 100)}'
 
 
-def connect_mqtt():
+def connect_mqtt() -> mqtt_client:
+    '''
+    Conecta o cliente mqtt ao BROKER mqtt
+    '''
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
-            print("Conectado ao Broker MQTT com sucesso!")
+            print("Conectado ao BROKER MQTT com sucesso!")
         else:
             print("Falha ao conectar, STATUS CODE %d\n", rc)
 
-    client = mqtt_client.Client(client_id, transport=protocol)
-    client.username_pw_set(username, password)
+    client = mqtt_client.Client(CLIENT_ID, transport=PROTOCOL)
+    client.username_pw_set(USERNAME, PASSWORD)
     client.on_connect = on_connect
-    client.connect(broker, port)
+    client.connect(BROKER, PORT)
     return client
 
 
-def publish(client):
-    msg_count = 0
-    while True:
-        time.sleep(0.1)  # segundos
-        msg = f"messages: {msg_count}"
-        result = client.publish(topic, msg)
-        # result: [0, 1]
-        status = result[0]
-        if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
-        else:
-            print(f"Failed to send message to topic {topic}")
-        msg_count += 1
+def publish(client, topic: str, msg: str):
+    '''
+    O cliente mqtt publica em um tópico no broker
+    Argumentos:
+    client: instância do cliente mqtt
+    topic: nome do tópico para publicação
+    msg: string a ser publicada
+    '''
+    result = client.publish(topic, msg)
+    status = result[0]  # result: [0, 1]
+    if status == 0:
+        return (f"Enviado `{msg}` ao tópico `{topic}`")
+    return (f"Falha ao enviar mensagem ao tópico {topic}")
 
 
 def run():
-    client = connect_mqtt()
+    client = connect_mqtt()  # conecta ao broker
+    # O loop_start() inicia uma nova thread, que chama o método loop em intervalos regulares.
+    # Ele também lida com reconexão automaticamente.
     client.loop_start()
-    publish(client)
+
+    msg_count = 0
+    while True:
+        time.sleep(0.1)  # segundos
+        msg = f"msg_count: {msg_count}"
+        result = publish(client, topic='python/mqtt',
+                         msg=msg)  # publica msg num tópico
+        print(result)
+        msg_count += 1
 
 
 if __name__ == '__main__':

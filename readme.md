@@ -33,11 +33,12 @@
     Python ver >= 3.10
     MongoDB
     Poetry
-        ```pip install poetry```
+    `pip install poetry`
 
 # ENVIRONMENT (.env)
 
     É necessário criar o arquivo .env no dir raiz.
+
     ```
     USERNAME=<username>
     PASSWORD=<password>

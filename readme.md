@@ -24,6 +24,13 @@
 
     https://mosquitto.org/download/
 
+# Requisitos
+
+    Python ver >= 3.10
+    MongoDB
+    Poetry
+        ```pip install poetry```
+
 # ENVIRONMENT (.env)
 
     É necessário criar o arquivo .env no dir raiz.
@@ -33,3 +40,15 @@
     PORT=<port>
     BROKER=<broker ip address/domain>
     ```
+
+# COMO USAR
+
+1. Instalação de dependência:
+   `poetry install`
+
+2. Garantir que o broker esteja em execução.
+3. Criar o arquivo .env com os dados adequados.
+4. Executar um subscriber
+   ex: `poetry run python3 subscriber.py`
+5. Executar um publisher
+   ex: `poetry run python3 publisher.py`

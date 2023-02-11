@@ -1,8 +1,10 @@
-# Instalação com Snap
+# Instalação do Eclipse Mosquitto Brocker
+
+## Instalação com Snap
 
 > https://snapcraft.io/mosquitto
 
-# Instalação do broker no linux (ubuntu/debian)
+## Instalação do broker no linux (ubuntu/debian)
 
 ```
 sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
@@ -10,7 +12,7 @@ sudo apt-get update
 sudo apt install mosquitto mosquitto-clients
 ```
 
-# Instalação do broker no linux (centos 7)
+## Instalação do broker no linux (centos 7)
 
 ```
 yum -y install epel-release
@@ -24,15 +26,18 @@ firewall-cmd --permanent --add-port=1883/tcp
 firewall-cmd --reload
 ```
 
-# Instalação do broker no windows
+## Instalação do broker no windows
 
 > https://mosquitto.org/download/
 
 # Requisitos
 
 [Python ver >= 3.10](https://www.python.org/downloads/release/python-31010/)
+
 [MongoDB](https://www.mongodb.com/try/download/community)
+
 [Poetry](https://python-poetry.org/)
+
 `pip install poetry`
 
 # ENVIRONMENT (.env)

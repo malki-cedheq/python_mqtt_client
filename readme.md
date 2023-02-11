@@ -23,3 +23,13 @@
 # Instalação do broker no windows
 
     https://mosquitto.org/download/
+
+# ENVIRONMENT (.env)
+
+    É necessário criar o arquivo .env no dir raiz.
+    ```
+    USERNAME=<username>
+    PASSWORD=<password>
+    PORT=<port>
+    BROKER=<broker ip address/domain>
+    ```

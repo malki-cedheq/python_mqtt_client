@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "paho_mqtt"
+name = "paho_mqtt_mongodb"
 version = "0.1.0"
 description = "Interação MQTT e MongoDB"
 authors = ["malki-çedheq <malkicedheq@gmail.com>"]
@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.10"
 paho-mqtt = "*"
 pymongo = "*"
+python-dotenv = "*"
 
 [build-system]
 requires = ["poetry-core"]

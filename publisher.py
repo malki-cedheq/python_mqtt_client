@@ -1,28 +1,28 @@
 # publisher.py
 # par com subscriber.py
 
-
+from dotenv import dotenv_values
 import random
 import time
-
 from paho.mqtt import client as mqtt_client
 
+env = dotenv_values(".env")
 
-broker = 'bionet.ufpe.br'
-port = 1883
-topic = "python/mqtt"
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
-username = 'gpeb'
-password = '12345'
+broker = env['BROKER']
+port = env['PORT']
+username = env['USERNAME']
+password = env['PASSWORD']
 protocol = 'tcp'  # tcp / websockets
+topic = "python/mqtt"
+client_id = f'python-mqtt-{random.randint(0, 100)}'
 
 
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
-            print("Connected to MQTT Broker!")
+            print("Conectado ao Broker MQTT com sucesso!")
         else:
-            print("Failed to connect, return code %d\n", rc)
+            print("Falha ao conectar, STATUS CODE %d\n", rc)
 
     client = mqtt_client.Client(client_id, transport=protocol)
     client.username_pw_set(username, password)

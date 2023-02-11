@@ -130,7 +130,22 @@ ocsp = ["certifi", "pyopenssl (>=17.2.0)", "requests (<3.0.0)", "service-identit
 snappy = ["python-snappy"]
 zstd = ["zstandard"]
 
+[[package]]
+name = "python-dotenv"
+version = "0.21.1"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "python-dotenv-0.21.1.tar.gz", hash = "sha256:1c93de8f636cde3ce377292818d0e440b6e45a82f215c3744979151fa8151c49"},
+    {file = "python_dotenv-0.21.1-py3-none-any.whl", hash = "sha256:41e12e0318bebc859fcc4d97d4db8d20ad21721a6aa5047dd59f090391cb549a"},
+]
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "3bde2134aeb45764d4c48c9ee9c17bff4e103dac363201f4473b82fab451fa93"
+content-hash = "e42da45df55706b9ff469126cac2e1fb275f9dd1661b7c3d1693e6ec48d8d342"

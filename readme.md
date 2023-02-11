@@ -30,14 +30,14 @@
 
 # Requisitos
 
-    Python ver >= 3.10
-    MongoDB
-    Poetry
+    [Python ver >= 3.10](https://www.python.org/downloads/release/python-31010/)
+    [MongoDB](https://www.mongodb.com/try/download/community)
+    [Poetry](https://python-poetry.org/)
     `pip install poetry`
 
 # ENVIRONMENT (.env)
 
-    É necessário criar o arquivo .env no dir raiz.
+    <p>É necessário criar o arquivo .env no dir raiz.</p>
 
     ```
     USERNAME=<username>

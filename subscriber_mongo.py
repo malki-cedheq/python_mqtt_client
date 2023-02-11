@@ -1,6 +1,10 @@
 # subscriber_mongo.py
 # par com publisher_mongo.py
-
+'''
+Autor: Malki-çedheq
+Descrição: inscreve no broker mqtt, e envia JSON para MONGODB
+Data: 11/02/2023
+'''
 from dotenv import dotenv_values
 import random
 from paho.mqtt import client as mqtt_client

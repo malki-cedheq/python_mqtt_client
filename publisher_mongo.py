@@ -1,6 +1,10 @@
 # publisher_mongo.py
 # par com subscriber_mongo.py
-
+'''
+Autor: Malki-çedheq
+Descrição: publica um JSON MONGODB no broker mqtt
+Data: 11/02/2023
+'''
 from dotenv import dotenv_values
 import random
 import time

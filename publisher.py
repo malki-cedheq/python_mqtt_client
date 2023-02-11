@@ -1,6 +1,10 @@
 # publisher.py
 # par com subscriber.py
-
+'''
+Autor: Malki-çedheq
+Descrição: publica no broker mqtt
+Data: 11/02/2023
+'''
 from dotenv import dotenv_values
 import random
 import time

@@ -1,4 +1,6 @@
-# publishing.py
+# publisher.py
+# par com subscriber.py
+
 
 import random
 import time

@@ -1,7 +1,7 @@
-# subscribing.py
+# subscriber.py
+# par com publisher.py
 
 import random
-
 from paho.mqtt import client as mqtt_client
 
 

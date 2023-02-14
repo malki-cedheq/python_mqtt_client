@@ -14,7 +14,7 @@ import json
 env = dotenv_values(".env")
 
 # instância do PyMongo
-mongoClient = MongoClient('mongodb://172.20.144.1:27017')
+mongoClient = MongoClient('mongodb://localhost:27017')
 
 BROKER = env['BROKER']
 PORT = int(env['PORT'])
@@ -48,9 +48,12 @@ def subscribe(client: mqtt_client, database: str, topic: str):
     client: instância do cliente mqtt
     topic: nome do tópico para inscrição
     '''
+    instancia, colecao = topic.split("/")
+
     def on_message(client, userdata, msg):
-        print(f"Recebeu `{msg.payload.decode()}` do tópico `{msg.topic}`")
-        send_to_mongo(msg.payload.decode(), database, topic)
+        instancia, colecao = msg.topic.split("/")
+        print(f"Recebeu `{msg.payload.decode()}` do tópico `{msg.topic}` -> coleção `{colecao}`")
+        send_to_mongo(msg.payload.decode(), database, colecao)
 
     client.subscribe(topic)
     client.on_message = on_message
@@ -72,12 +75,12 @@ def run():
     client = connect_mqtt()  # conecta ao broker
 
     # Inscrições nos tópicos
-    subscribe(client, 'sismo', 'acelerometria')
-    subscribe(client, 'sismo', 'bpm')
-    subscribe(client, 'sismo', 'ecg')
-    subscribe(client, 'sismo', 'giroscopia')
-    subscribe(client, 'sismo', 'spo2')
-    subscribe(client, 'sismo', 'temperatura')
+    subscribe(client, 'sismo', 'sismo01/temperatura')
+    subscribe(client, 'sismo', 'sismo01/bpm')
+    subscribe(client, 'sismo', 'sismo01/spo2')
+    subscribe(client, 'sismo', 'sismo01/ecg')
+    subscribe(client, 'sismo', 'sismo01/acelerometria')
+    subscribe(client, 'sismo', 'sismo01/giroscopia')
 
     # O método bloqueia o programa, é útil quando o programa deve ser executado indefinidamente
     client.loop_forever()

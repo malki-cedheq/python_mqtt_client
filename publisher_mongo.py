@@ -65,16 +65,16 @@ def run():
         time.sleep(1)  # segundos
 
         bpm_json_data = {
-            "id_paciente": "paciente02",
-            "id_sessao": "1",
-            "id_exercicio": "1",
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "n_pacote": msg_count,
-            "bpm": random.randint(60, 100),
+            "id_paciente": '2',
+            "id_sessao": '2',
+            "id_exercicio": '24',
+            "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            "n_pacote": str(msg_count),
+            "bpm": str(random.randint(60, 100)),
         }
 
         msg = json.dumps(bpm_json_data)
-        result = publish(client, topic='bpm', msg=msg)
+        result = publish(client, topic='sismo01/bpm', msg=msg)
         print(result)
         msg_count += 1
 

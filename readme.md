@@ -30,6 +30,39 @@ firewall-cmd --reload
 
 > https://mosquitto.org/download/
 
+## Teste
+
+```
+mosquitto_sub -h "localhost" -t "topic" -v
+mosquitto_pub -h "localhost" -t "topic" -m "message"
+```
+
+# Configuração do Mosquitto
+
+Adição de usuário e senha
+
+```
+mosquitto_passwd -c /etc/mosquitto/passwordfile nome_usuario
+```
+
+Arquivo mosquitto.conf
+
+```
+listener 1883
+protocol mqtt
+socket_domain ipv4
+allow_anonymous false
+password_file /etc/mosquitto/passwordfile
+persistence true
+persistence_location /var/lib/mosquitto/
+log_dest file /var/log/mosquitto/mosquitto.log
+include_dir /etc/mosquitto/conf.d
+connection_messages true
+log_timestamp true
+log_type error
+log_type warning
+```
+
 # Requisitos
 
 [Python ver >= 3.10](https://www.python.org/downloads/release/python-31010/)

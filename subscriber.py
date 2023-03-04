@@ -8,7 +8,7 @@ Data: 11/02/2023
 
 from dotenv import dotenv_values
 import uuid
-import time
+from datetime import datetime
 from paho.mqtt import client as mqtt_client
 
 env = dotenv_values(".env")
@@ -18,7 +18,7 @@ PORT = int(env['PORT'])
 USERNAME = env['USERNAME']
 PASSWORD = env['PASSWORD']
 PROTOCOL = 'tcp'  # tcp / websockets
-CLIENT_ID = '{}'.format(uuid.uuid5(uuid.NAMESPACE_DNS, time.now())) #gera um id aletório
+CLIENT_ID = '{}'.format(uuid.uuid5(uuid.NAMESPACE_DNS, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))) #gera um id aletório
 
 
 def connect_mqtt() -> mqtt_client:

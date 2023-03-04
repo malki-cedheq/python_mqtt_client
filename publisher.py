@@ -6,7 +6,7 @@ Descrição: publica no broker mqtt
 Data: 11/02/2023
 '''
 from dotenv import dotenv_values
-import random
+import uuid
 import time
 from paho.mqtt import client as mqtt_client
 
@@ -17,7 +17,7 @@ PORT = int(env['PORT'])
 USERNAME = env['USERNAME']
 PASSWORD = env['PASSWORD']
 PROTOCOL = 'tcp'  # tcp / websockets
-CLIENT_ID = f'python-mqtt-{random.randint(0, 100)}'
+CLIENT_ID = '{}'.format(uuid.uuid5(uuid.NAMESPACE_DNS, time.now())) #gera um id aletório
 
 
 def connect_mqtt() -> mqtt_client:

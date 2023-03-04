@@ -21,7 +21,7 @@ PORT = int(env['PORT'])
 USERNAME = env['USERNAME']
 PASSWORD = env['PASSWORD']
 PROTOCOL = 'tcp'  # tcp / websockets
-CLIENT_ID = f'python-mqtt-{random.randint(0, 100)}'
+CLIENT_ID = 'python-mqtt-{}'.format(random.randint(0, 100))
 
 
 def connect_mqtt() -> mqtt_client:

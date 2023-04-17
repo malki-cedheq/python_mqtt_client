@@ -13,9 +13,6 @@ import json
 
 env = dotenv_values(".env")
 
-# instância do PyMongo
-mongoClient = MongoClient('mongodb://localhost:27017')
-
 BROKER = env['BROKER']
 PORT = int(env['PORT'])
 USERNAME = env['USERNAME']
@@ -23,6 +20,9 @@ PASSWORD = env['PASSWORD']
 PROTOCOL = 'tcp'  # tcp / websockets
 CLIENT_ID = 'python-mqtt-{}'.format(random.randint(0, 100))
 
+# instância do PyMongo
+MONGO_URI = 'mongodb://{}:{}'.format(env['MONGO_HOST'],env['MONGO_PORT'])
+mongoClient = MongoClient()
 
 def connect_mqtt() -> mqtt_client:
     '''

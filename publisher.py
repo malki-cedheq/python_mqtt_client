@@ -63,7 +63,7 @@ def run():
     while True:
         time.sleep(0.1)  # segundos
         msg = f"msg_count: {msg_count}"
-        result = publish(client, topic='python/mqtt',
+        result = publish(client, topic='oficina',
                          msg=msg)  # publica msg num tópico
         print(result)
         msg_count += 1

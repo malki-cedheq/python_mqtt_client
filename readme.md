@@ -82,8 +82,7 @@ USERNAME=<username>
 PASSWORD=<password>
 PORT=<port>
 BROKER=<broker ip address/domain>
-MONGO_HOST=<ip mongodb*>
-MONGO_PORT=<porta mongodb*>
+MONGO_URI=<"mongodb://usuario:senha@host:porta">
 ```
 
 # COMO USAR

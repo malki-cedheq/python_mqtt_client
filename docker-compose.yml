@@ -1,0 +1,20 @@
+#https://hub.docker.com/_/eclipse-mosquitto
+version: '3'
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto_container
+    volumes:
+      - ./mosquitto:/mosquitto
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883   
+    restart: unless-stopped
+    networks:
+       - mosquitto
+networks:
+    mosquitto:
+        name: mosquitto
+        driver: bridge

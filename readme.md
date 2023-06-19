@@ -92,3 +92,50 @@ MONGO_URI=<"mongodb://usuario:senha@host:porta">
 3. Criar o arquivo .env com os dados adequados.
 4. Executar um subscriber, ex.: `poetry run python3 subscriber.py`
 5. Executar um publisher, ex.: `poetry run python3 publisher.py`
+
+# Utilizando o ambiente
+
+## Requisitos
+
+> [Docker](https://www.docker.com/)
+
+> [Python ^3.10](https://www.python.org/)
+
+> [Poetry](https://python-poetry.org/)
+
+### Criação de arquivo .env no diretório raiz
+
+```
+MQTT_USERNAME=
+MQTT_PASSWORD=
+MQTT_PORT=
+MQTT_BROKER=
+```
+
+## Executando serviços com Docker
+
+### Criando imagem Docker
+
+No diretório raiz executar:
+
+`docker build --tag mqtt --file Dockerfile.consumer .`
+
+### Criando ambiente Docker mqtt
+
+`docker compose -f docker-compose.yml up -d`
+
+### Interagindo via shell com o mqtt Docker
+
+`docker exec -it mosquitto_container sh`
+
+### Criando um usuário autenticado via shell
+
+`mosquitto_passwd -c /mosquitto/config/password.txt nome_usuario`
+
+## Instalação das dependências
+
+`poetry install`
+
+## Executando aplicações
+
+`poetry run python3 arquivo.py`

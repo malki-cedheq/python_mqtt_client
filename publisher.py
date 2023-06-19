@@ -4,6 +4,7 @@
 Autor: Malki-çedheq
 Descrição: publica no broker mqtt
 Data: 11/02/2023
+Atualizado: 19/06/2023
 '''
 from dotenv import dotenv_values
 import uuid
@@ -29,8 +30,8 @@ def connect_mqtt() -> mqtt_client:
         if rc == 0:
             print("Conectado ao BROKER MQTT com sucesso!")
         else:
-            print("Falha ao conectar, STATUS CODE %d\n", rc)
-
+            print("Falha ao conectar, STATUS CODE {}".format(rc))
+        
     client = mqtt_client.Client(CLIENT_ID, transport=PROTOCOL)
     client.username_pw_set(USERNAME, PASSWORD)
     client.on_connect = on_connect
@@ -55,19 +56,21 @@ def publish(client, topic: str, msg: str):
 
 def run():
     client = connect_mqtt()  # conecta ao broker
-    # O loop_start() inicia uma nova thread, que chama o método loop em intervalos regulares.
-    # Ele também lida com reconexão automaticamente.
-    client.loop_start()
+    if client:
+        # O loop_start() inicia uma nova thread, que chama o método loop em intervalos regulares.
+        # Ele também lida com reconexão automaticamente.
+        client.loop_start()
 
-    msg_count = 0
-    while True:
-        time.sleep(0.1)  # segundos
-        msg = f"msg_count: {msg_count}"
-        result = publish(client, topic='oficina',
-                         msg=msg)  # publica msg num tópico
-        print(result)
-        msg_count += 1
-
+        msg_count = 0
+        while True:
+            time.sleep(0.1)  # segundos
+            msg = f"msg_count: {msg_count}"
+            result = publish(client, topic='oficina',
+                            msg=msg)  # publica msg num tópico
+            print(result)
+            msg_count += 1
+    else:
+        print("Não conectou ao broker MQTT!")
 
 if __name__ == '__main__':
     run()

@@ -4,6 +4,7 @@
 Autor: Malki-çedheq
 Descrição: publica um JSON MONGODB no broker mqtt
 Data: 11/02/2023
+Atualizado: 19/06/2023
 '''
 from dotenv import dotenv_values
 import random
@@ -56,28 +57,30 @@ def publish(client, topic: str, msg: str):
 
 def run():
     client = connect_mqtt()  # conecta ao broker
-    # O loop_start() inicia uma nova thread, que chama o método loop em intervalos regulares.
-    # Ele também lida com reconexão automaticamente.
-    client.loop_start()
+    if client:
+        # O loop_start() inicia uma nova thread, que chama o método loop em intervalos regulares.
+        # Ele também lida com reconexão automaticamente.
+        client.loop_start()
 
-    msg_count = 0
-    while True:
-        time.sleep(1)  # segundos
+        msg_count = 0
+        while True:
+            time.sleep(1)  # segundos
 
-        bpm_json_data = {
-            "id_paciente": '2',
-            "id_sessao": '2',
-            "id_exercicio": '24',
-            "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            "n_pacote": str(msg_count),
-            "bpm": str(random.randint(60, 100)),
-        }
+            bpm_json_data = {
+                "id_paciente": '2',
+                "id_sessao": '2',
+                "id_exercicio": '24',
+                "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                "n_pacote": str(msg_count),
+                "bpm": str(random.randint(60, 100)),
+            }
 
-        msg = json.dumps(bpm_json_data)
-        result = publish(client, topic='sismo01/bpm', msg=msg)
-        print(result)
-        msg_count += 1
-
+            msg = json.dumps(bpm_json_data)
+            result = publish(client, topic='sismo01/bpm', msg=msg)
+            print(result)
+            msg_count += 1
+    else:
+        print("Não conectou ao broker MQTT!")
 
 if __name__ == '__main__':
     run()

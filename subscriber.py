@@ -4,6 +4,7 @@
 Autor: Malki-çedheq
 Descrição: inscreve no broker mqtt
 Data: 11/02/2023
+Atualizado: 19/06/2023
 '''
 
 from dotenv import dotenv_values
@@ -29,8 +30,8 @@ def connect_mqtt() -> mqtt_client:
         if rc == 0:
             print("Conectado ao BROKER MQTT com sucesso!")
         else:
-            print("Falha ao conectar, STATUS CODE %d\n", rc)
-
+            print("Falha ao conectar, STATUS CODE {}".format(rc))
+        
     client = mqtt_client.Client(CLIENT_ID, transport=PROTOCOL)
     client.username_pw_set(USERNAME, PASSWORD)
     client.on_connect = on_connect
@@ -54,13 +55,14 @@ def subscribe(client: mqtt_client, topic: str):
 
 def run():
     client = connect_mqtt()  # conecta ao broker
+    if client:
+        # Inscrições nos tópicos
+        subscribe(client, topic='oficina')
 
-    # Inscrições nos tópicos
-    subscribe(client, topic='oficina')
-
-    # O método bloqueia o programa, é útil quando o programa deve ser executado indefinidamente
-    client.loop_forever()
-
+        # O método bloqueia o programa, é útil quando o programa deve ser executado indefinidamente
+        client.loop_forever()
+    else:
+        print("Não conectou ao broker MQTT!")
 
 if __name__ == '__main__':
     run()

@@ -12,9 +12,3 @@ services:
     ports:
       - 1883:1883   
     restart: unless-stopped
-    networks:
-       - mosquitto
-networks:
-    mosquitto:
-        name: mosquitto
-        driver: bridge

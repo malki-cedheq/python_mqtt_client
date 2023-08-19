@@ -64,8 +64,24 @@ def run():
 
         msg_count = 0
         while True:
-            time.sleep(1)  # segundos
+            time.sleep(0.5)  # segundos
 
+            #teste envio ecg
+            ecg_array = []
+            for i in range(50):
+                ecg_array.append(str(random.randint(0, 1000)))
+            ecg_json_data = {
+                "id_paciente": '2',
+                "id_sessao": '2',
+                "id_exercicio": '24',
+                "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                "n_pacote": str(msg_count),
+                "ecg": ecg_array,
+            }
+            msg = json.dumps(ecg_json_data)
+            result = publish(client, topic='sismo01/ecg', msg=msg)
+
+            #teste envio bpm
             bpm_json_data = {
                 "id_paciente": '2',
                 "id_sessao": '2',
@@ -74,10 +90,34 @@ def run():
                 "n_pacote": str(msg_count),
                 "bpm": str(random.randint(60, 100)),
             }
-
             msg = json.dumps(bpm_json_data)
             result = publish(client, topic='sismo01/bpm', msg=msg)
-            print(result)
+
+            #teste envio spo2
+            spo2_json_data = {
+                "id_paciente": '2',
+                "id_sessao": '2',
+                "id_exercicio": '24',
+                "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                "n_pacote": str(msg_count),
+                "spo2": str(random.randint(92, 110)),
+            }
+            msg = json.dumps(spo2_json_data)
+            result = publish(client, topic='sismo01/spo2', msg=msg)
+
+            #teste envio temperatura
+            temperatura_json_data = {
+                "id_paciente": '2',
+                "id_sessao": '2',
+                "id_exercicio": '24',
+                "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                "n_pacote": str(msg_count),
+                "temperatura": str(random.randint(34, 40)),
+            }
+            msg = json.dumps(temperatura_json_data)
+            result = publish(client, topic='sismo01/temperatura', msg=msg)
+            
+            #print(result)
             msg_count += 1
     else:
         print("Não conectou ao broker MQTT!")

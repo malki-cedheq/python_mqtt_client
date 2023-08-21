@@ -57,7 +57,7 @@ def run():
     client = connect_mqtt()  # conecta ao broker
     if client:
         # Inscrições nos tópicos
-        subscribe(client, topic='sismo_ca_D0-94-66-A0-5E-8D')
+        subscribe(client, topic='sismo_ca_DC-A6-32-B8-9D-37')
 
         # O método bloqueia o programa, é útil quando o programa deve ser executado indefinidamente
         client.loop_forever()

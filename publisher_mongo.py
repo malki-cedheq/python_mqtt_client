@@ -64,7 +64,7 @@ def run():
 
         msg_count = 0
         while True:
-            time.sleep(0.5)  # segundos
+            time.sleep(2.0)  # segundos
 
             #teste envio ecg
             ecg_array = []
@@ -80,6 +80,7 @@ def run():
             }
             msg = json.dumps(ecg_json_data)
             result = publish(client, topic='sismo01/ecg', msg=msg)
+            print(result)
 
             #teste envio bpm
             bpm_json_data = {
@@ -92,6 +93,7 @@ def run():
             }
             msg = json.dumps(bpm_json_data)
             result = publish(client, topic='sismo01/bpm', msg=msg)
+            print(result)
 
             #teste envio spo2
             spo2_json_data = {
@@ -104,6 +106,7 @@ def run():
             }
             msg = json.dumps(spo2_json_data)
             result = publish(client, topic='sismo01/spo2', msg=msg)
+            print(result)
 
             #teste envio temperatura
             temperatura_json_data = {
@@ -117,7 +120,7 @@ def run():
             msg = json.dumps(temperatura_json_data)
             result = publish(client, topic='sismo01/temperatura', msg=msg)
             
-            #print(result)
+            print(result)
             msg_count += 1
     else:
         print("Não conectou ao broker MQTT!")

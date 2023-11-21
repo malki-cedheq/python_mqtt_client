@@ -66,7 +66,8 @@ def run():
         msg_count = 0
         cnt_temperatura = 31
         while True:
-            time.sleep(1.0)  # segundos
+            time.sleep(2.0)  # segundos
+
             # teste envio ecg
             ecg_array = []
             for i in range(50):

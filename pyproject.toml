@@ -11,6 +11,38 @@ paho-mqtt = "*"
 pymongo = "*"
 python-dotenv = "*"
 
+[tool.poetry.group.dev.dependencies]
+taskipy = "^1.12.0"     # https://github.com/taskipy/taskipy
+pytest = "^7.4.3"       # https://github.com/pytest-dev/pytest/
+pytest-cov = "^4.1.0"   # https://github.com/pytest-dev/pytest-cov
+isort = "^5.12.0"       # https://github.com/pycqa/isort/
+ruff = "^0.1.6"         # https://github.com/astral-sh/ruff
+black = "^23.11.0"      # https://github.com/psf/black
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "--doctest-modules"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.black]
+extend-exclude = '(migrations/)'
+line_length = 88
+
+[tool.ruff]
+line-length = 88
+exclude = ['.venv']
+
+[tool.taskipy.tasks]
+lint = 'ruff . && black --check . --diff'
+format = 'black .  && isort .'
+pre_test = 'task lint'
+test = 'pytest -s -x --cov=app -vv'
+post_test = 'coverage html'
+export_libs = 'poetry export -f requirements.txt --output requirements.txt'

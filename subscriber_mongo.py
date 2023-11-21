@@ -5,11 +5,12 @@ Autor: Malki-çedheq
 Descrição: inscreve no BROKER mqtt, e envia JSON para MONGODB
 Data: 11/02/2023
 """
-from dotenv import dotenv_values
+import json
 import random
+
+from dotenv import dotenv_values
 from paho.mqtt import client as mqtt_client
 from pymongo import MongoClient
-import json
 
 env = dotenv_values(".env")
 

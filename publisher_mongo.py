@@ -6,12 +6,13 @@ Descrição: publica um JSON MONGODB no broker mqtt
 Data: 11/02/2023
 Atualizado: 19/06/2023
 """
-from dotenv import dotenv_values
+import json
 import random
 import time
 from datetime import datetime
+
+from dotenv import dotenv_values
 from paho.mqtt import client as mqtt_client
-import json
 
 env = dotenv_values(".env")
 

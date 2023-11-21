@@ -11,6 +11,10 @@ paho-mqtt = "*"
 pymongo = "*"
 python-dotenv = "*"
 
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry.group.dev.dependencies]
 taskipy = "^1.12.0"     # https://github.com/taskipy/taskipy
 pytest = "^7.4.3"       # https://github.com/pytest-dev/pytest/
@@ -18,10 +22,6 @@ pytest-cov = "^4.1.0"   # https://github.com/pytest-dev/pytest-cov
 isort = "^5.12.0"       # https://github.com/pycqa/isort/
 ruff = "^0.1.6"         # https://github.com/astral-sh/ruff
 black = "^23.11.0"      # https://github.com/psf/black
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 pythonpath = "."
